@@ -26,29 +26,24 @@ class FollowToggle {
   handleClick(e) {
     e.preventDefault();
     if (this.followState === 'followed') {
+      // disables button until ajax call completes
       this.followState = 'unfollowing';
       this.render();
       APIUtil.unfollowUser(this.userId).then(data => {
+        // sets follow state and rerenders
         this.followState = 'unfollowed';
         this.render();
       });
     } else {
+      // disables button until ajax call responds
       this.followState = 'following';
       this.render();
       APIUtil.followUser(this.userId).then(data => {
+        // sets follow state and rerenders
         this.followState = 'followed';
         this.render();
       });
     }
-    // $.ajax({
-    //   method: reqMethod,
-    //   url: `${this.userId}/follow`,
-    //   dataType: 'json',
-    //   success: function(data) {
-    //     this.followState = reqMethod === 'DELETE' ? 'unfollowed' : 'followed';
-    //     this.render();
-    //   }.bind(this)
-    // });
   }
 }
 module.exports = FollowToggle;

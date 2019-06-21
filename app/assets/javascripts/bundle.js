@@ -93,25 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-const APIUtil = {
-  followUser: id => {
-    return $.ajax({
-      method: 'POST',
-      url: `${id}/follow`,
-      dataType: 'json'
-    });
-  },
-  unfollowUser: id => {
-    return $.ajax({
-      method: 'DELETE',
-      url: `${id}/follow`,
-      dataType: 'json'
-    });
-  }
-};
-
-module.exports = APIUtil;
-
+throw new Error("Module parse failed: Unexpected token (22:6)\nYou may need an appropriate loader to handle this file type.\n|       dataType: 'json',\n|       data: { query }\n>     });\n|   )\n| };");
 
 /***/ }),
 
@@ -150,29 +132,24 @@ class FollowToggle {
   handleClick(e) {
     e.preventDefault();
     if (this.followState === 'followed') {
+      // disables button until ajax call completes
       this.followState = 'unfollowing';
       this.render();
       APIUtil.unfollowUser(this.userId).then(data => {
+        // sets follow state and rerenders
         this.followState = 'unfollowed';
         this.render();
       });
     } else {
+      // disables button until ajax call responds
       this.followState = 'following';
       this.render();
       APIUtil.followUser(this.userId).then(data => {
+        // sets follow state and rerenders
         this.followState = 'followed';
         this.render();
       });
     }
-    // $.ajax({
-    //   method: reqMethod,
-    //   url: `${this.userId}/follow`,
-    //   dataType: 'json',
-    //   success: function(data) {
-    //     this.followState = reqMethod === 'DELETE' ? 'unfollowed' : 'followed';
-    //     this.render();
-    //   }.bind(this)
-    // });
   }
 }
 module.exports = FollowToggle;
@@ -188,13 +165,64 @@ module.exports = FollowToggle;
 /***/ (function(module, exports, __webpack_require__) {
 
 const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
+const UsersSearch = __webpack_require__(/*! ./users_search.js */ "./frontend/users_search.js");
 
 $(() => {
   // creates a FollowToggle instance for each .follow-toggle button
   $('.follow-toggle').each(function(i, ele) {
     new FollowToggle(ele);
   });
+  $('.users-search').each(function(i, ele) {
+    new UsersSearch(ele);
+  });
 });
+
+
+/***/ }),
+
+/***/ "./frontend/users_search.js":
+/*!**********************************!*\
+  !*** ./frontend/users_search.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js");
+const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
+
+class UsersSearch {
+  constructor($el) {
+    this.$el = $($el);
+    this.$searchField = this.$el.find('.search-field');
+    this.$userList = this.$el.find('.users');
+    $(this.$searchField).on('keyup', this.handleKeypress.bind(this));
+  }
+
+  handleKeypress(e) {
+    APIUtil.searchUsers(inputVal).then(users => {
+      this.generateUsers(users);
+    });
+  }
+
+  generateUsers(users) {
+    this.$userList.empty();
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+
+      const $a = $('<a>');
+
+      $a.text(user.username);
+      $a.attr('href', `/users/${user.id}/`);
+
+      const $li = '<li>';
+      $li.append($a);
+
+      this.$userList.append($li);
+    }
+  }
+}
+
+module.exports = UsersSearch;
 
 
 /***/ })

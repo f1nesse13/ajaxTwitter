@@ -1,4 +1,4 @@
-const FollowToggle = require('follow_toggle.js');
+const FollowToggle = require('./follow_toggle.js');
 
 $(() => {
   // creates a FollowToggle instance for each .follow-toggle button

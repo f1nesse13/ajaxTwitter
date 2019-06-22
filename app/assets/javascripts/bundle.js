@@ -97,14 +97,14 @@ const APIUtil = {
   followUser: id => {
     return $.ajax({
       method: 'POST',
-      url: `${id}/follow`,
+      url: `/users/${id}/follow`,
       dataType: 'json'
     });
   },
   unfollowUser: id => {
     return $.ajax({
       method: 'DELETE',
-      url: `${id}/follow`,
+      url: `/users/${id}/follow`,
       dataType: 'json'
     });
   },
@@ -218,13 +218,13 @@ const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/f
 class UsersSearch {
   constructor($el) {
     this.$el = $($el);
-    this.$searchField = this.$el.find('.search-field');
-    this.$userList = this.$el.find('.users');
+    this.$searchField = this.$el.find('input.search-field');
+    this.$userList = this.$el.find('ul.users');
     $(this.$searchField).on('keyup', this.handleKeypress.bind(this));
   }
 
   handleKeypress(e) {
-    APIUtil.searchUsers(inputVal).then(users => {
+    APIUtil.searchUsers(this.$searchField.val()).then(users => {
       this.generateUsers(users);
     });
   }
@@ -233,16 +233,13 @@ class UsersSearch {
     this.$userList.empty();
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
-
       const $a = $('<a>');
 
-      $a.text(user.username);
-      $a.attr('href', `/users/${user.id}/`);
+      $($a).text(user.username);
+      $($a).attr('href', `/users/${user.id}/`);
 
       const $li = '<li>';
-      $li.append($a);
-
-      this.$userList.append($li);
+      this.$userList.append($($li).append($a));
     }
   }
 }

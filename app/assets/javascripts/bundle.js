@@ -93,7 +93,32 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module parse failed: Unexpected token (22:6)\nYou may need an appropriate loader to handle this file type.\n|       dataType: 'json',\n|       data: { query }\n>     });\n|   )\n| };");
+const APIUtil = {
+  followUser: id => {
+    return $.ajax({
+      method: 'POST',
+      url: `${id}/follow`,
+      dataType: 'json'
+    });
+  },
+  unfollowUser: id => {
+    return $.ajax({
+      method: 'DELETE',
+      url: `${id}/follow`,
+      dataType: 'json'
+    });
+  },
+  searchUsers: query =>
+    $.ajax({
+      url: '/users/search',
+      type: 'GET',
+      dataType: 'json',
+      data: { query }
+    })
+};
+
+module.exports = APIUtil;
+
 
 /***/ }),
 

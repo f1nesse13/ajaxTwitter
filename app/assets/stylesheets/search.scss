@@ -1,0 +1,31 @@
+.users-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.users-search h2 {
+  font-size: 40px;
+}
+
+.search-field {
+  padding: 10px;
+  font-size: 1.5rem;
+  width: 400px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.users-search ul {
+  padding: 0;
+}
+
+.users-search ul li {
+  padding: 15px;
+}
+
+.users-search ul li a {
+  text-align: center;
+  margin-top: 15px;
+}

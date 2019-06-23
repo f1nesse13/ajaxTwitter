@@ -1,0 +1,67 @@
+@import './variables';
+
+h2 {
+  font: 300 1.3rem 'Fredoka One', cursive;
+  color: $base-blue;
+  text-align: center;
+}
+
+.feed-form {
+  max-height: 400px;
+  padding: 40px;
+  margin-left: 50px;
+  border: 3px solid $base-blue;
+  margin-top: 5%;
+  background-color: #e7e7e7;
+  border-radius: 10px;
+  box-shadow: 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.feed-form textarea,
+.feed-form select {
+  border: 2px solid $base-blue;
+  outline: none;
+  border-radius: 5px;
+  width: 200px;
+  font: 300 1rem 'Roboto';
+
+}
+
+.feed-form textarea {
+  min-height: 100px;
+}
+
+.login-form,
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form label,
+.signup-form label {
+  font: 300 2rem 'Fredoka One', cursive;
+  color: $base-blue;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-form input,
+.signup-form input {
+  border: 2px solid $base-blue;
+  outline: none;
+  border-radius: 5px;
+  width: 300px;
+  font: 300 1rem 'Roboto';
+  padding: 10px;
+  margin: 10px;
+}
+
+.signup-form+a,
+.login-form+a {
+  display: block;
+  font: 700 1.6rem 'Roboto';
+  padding: 20px;
+  text-align: center;
+}

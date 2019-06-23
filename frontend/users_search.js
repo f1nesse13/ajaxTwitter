@@ -19,13 +19,21 @@ class UsersSearch {
     this.$userList.empty();
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
-      const $a = $('<a>');
-
-      $($a).text(user.username);
+      const $a = $('<a></a>');
+      $($a).text(`@${user.username}`);
       $($a).attr('href', `/users/${user.id}/`);
 
-      const $li = '<li>';
-      this.$userList.append($($li).append($a));
+      const $li = $('<li></li>');
+      const $followToggle = $('<button></button>');
+
+      new FollowToggle($followToggle, {
+        userId: user.id,
+        followState: user.followed ? 'followed' : 'unfollowed'
+      });
+
+      $($li).append($a);
+      $($li).append($followToggle);
+      this.$userList.append($li);
     }
   }
 }

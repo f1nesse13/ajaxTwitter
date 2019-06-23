@@ -1,0 +1,27 @@
+body,
+nav,
+h1,
+li,
+button,
+form,
+input,
+a {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  vertical-align: baseline;
+  text-decoration: none;
+  font: inherit;
+  font-size: 16px;
+  box-sizing: content-box;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a:visited {
+  color: inherit;
+}

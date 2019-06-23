@@ -1,0 +1,87 @@
+@import '_variables.scss';
+
+body h1:not(:first-child) {
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-weight: 300;
+  font-size: 40px;
+  color: $base-blue;
+  margin-bottom: 15px;
+  flex-basis: 50%;
+
+}
+
+.user-details {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.user-follows {
+  text-align: center;
+}
+
+b {
+  display: block;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: $base-blue;
+}
+
+article ul,
+aside ul,
+.users-search ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+article ul li,
+aside ul li,
+.users-search ul li {
+  position: relative;
+  display: flex;
+  // align-items: center;
+  flex-direction: column;
+  width: 400px;
+  min-height: 150px;
+  border: 1px solid #000;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+article a,
+aside a,
+article a:visited,
+aside a:visited,
+.users-search a,
+.users-search a:visited {
+  text-align: left;
+  font: 700 2rem 'Roboto', sans-serif;
+  color: $base-blue;
+}
+
+article p,
+aside p {
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  color: #555;
+}
+
+article small {
+  position: absolute;
+  bottom: 3px;
+}
+
+.feed {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.feed-messages {
+  margin-right: 100px;
+}

@@ -1,0 +1,17 @@
+@import '_variables.scss';
+
+input[type="submit"]:first-child~input[type="submit"],
+button.follow-toggle,
+.submit-button,
+.users button,
+.login-form input[type='submit'],
+.signup-form input[type='submit'] {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: $base-blue;
+  color: #fff;
+  font-family: 'Arial';
+
+}

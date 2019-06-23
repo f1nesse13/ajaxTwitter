@@ -132,20 +132,22 @@ module.exports = APIUtil;
 const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js");
 
 class FollowToggle {
-  constructor($el) {
+  constructor($el, options) {
     this.$el = $el;
-    this.userId = $(this.$el).attr('data-user-id');
+    this.userId = $(this.$el).attr('data-user-id') || options.userId;
     this.followState =
-      $(this.$el).attr('data-initial-follow-state') === 'true' ? 'followed' : 'unfollowed';
+      $(this.$el).attr('data-initial-follow-state') === 'true'
+        ? 'followed'
+        : 'unfollowed' || false;
     this.render();
     $(this.$el).on('click', this.handleClick.bind(this));
   }
 
   render() {
     if (this.followState === 'followed') {
-      this.$el.innerHTML = 'Unfollow!';
+      $(this.$el).html('Unfollow!');
     } else if (this.followState === 'unfollowed') {
-      this.$el.innerHTML = 'Follow!';
+      $(this.$el).html('Follow!');
     }
     if (this.followState === 'following' || this.followState === 'unfollowing') {
       $(this.$el).prop('disabled', true);
@@ -233,13 +235,21 @@ class UsersSearch {
     this.$userList.empty();
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
-      const $a = $('<a>');
-
-      $($a).text(user.username);
+      const $a = $('<a></a>');
+      $($a).text(`@${user.username}`);
       $($a).attr('href', `/users/${user.id}/`);
 
-      const $li = '<li>';
-      this.$userList.append($($li).append($a));
+      const $li = $('<li></li>');
+      const $followToggle = $('<button></button>');
+
+      new FollowToggle($followToggle, {
+        userId: user.id,
+        followState: user.followed ? 'followed' : 'unfollowed'
+      });
+
+      $($li).append($a);
+      $($li).append($followToggle);
+      this.$userList.append($li);
     }
   }
 }

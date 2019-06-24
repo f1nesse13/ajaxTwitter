@@ -3,8 +3,8 @@
 <small><%= tweet.created_at %></small>
 <% if tweet.mentioned_users.length > 0 %>
   <ul>
+    <p>Mentions:</p>
     <% tweet.mentioned_users.each do |mentioned_user| %>
-      <p>Mentions:</p>
       <li><a href="<%= user_url(mentioned_user) %>"><%= mentioned_user.username %></a></li>
     <% end %>
   </ul>

@@ -209,15 +209,13 @@ class TweetCompose {
 
   submit(e) {
     e.preventDefault();
-    const tweetData = this.$el.serializeJSON();
-    const targetUl = this.$el.attr('data-tweets-ul');
+    const formData = this.$el.serializeJSON();
+    // disables all inputs while we try to add to DB
     this.$el.find(':input').prop('disabled', true);
-    APIUtil.createTweet(tweetData)
+    // sends form data to ajax call
+    APIUtil.createTweet(formData)
       .then(data => {
-        const dataToString = JSON.stringify(data);
-        const $ul = $(`ul${targetUl}`);
-        const $li = $('<li></li>');
-        $ul.prepend($li.append(dataToString));
+        this.handleSuccess(data);
       })
       .fail(err => {
         this.$el.find(':input').prop('disabled', false);
@@ -225,13 +223,17 @@ class TweetCompose {
   }
 
   clearInput() {
-    const allInputs = this.$el.find(':input');
-    allInputs.each((i, ele) => {
-      $(ele).val('');
-    });
+    this.$el.find('textarea').val('');
+    this.$el.find('select').val('');
   }
 
-  handleSuccess() {}
+  handleSuccess(data) {
+    this.$el.find(':input').prop('disabled', false);
+    this.clearInput();
+    const $ul = $(this.$el.attr('data-tweets-ul'));
+    const $li = $('<li></li>');
+    $ul.prepend($li.append(JSON.stringify(data)));
+  }
 }
 
 module.exports = TweetCompose;

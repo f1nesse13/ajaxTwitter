@@ -37,7 +37,7 @@ aside ul,
   align-items: left;
 }
 
-article ul li,
+article>ul>li,
 aside ul li,
 .users-search ul li {
   position: relative;
@@ -50,6 +50,15 @@ aside ul li,
   padding: 5px;
   border-radius: 3px;
   background-color: #fff;
+}
+
+article li>ul li {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+article li>ul>p {
+  font-weight: 700;
 }
 
 article a,

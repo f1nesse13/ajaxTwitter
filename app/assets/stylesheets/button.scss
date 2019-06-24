@@ -13,5 +13,8 @@ button.follow-toggle,
   background-color: $base-blue;
   color: #fff;
   font-family: 'Arial';
+}
 
+button:disabled {
+  opacity: .5;
 }

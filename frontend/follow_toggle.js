@@ -13,6 +13,7 @@ class FollowToggle {
   }
 
   render() {
+    console.log(this.followState);
     if (this.followState === 'followed') {
       $(this.$el).html('Unfollow!');
     } else if (this.followState === 'unfollowed') {

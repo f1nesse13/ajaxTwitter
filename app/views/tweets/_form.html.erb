@@ -4,10 +4,11 @@
       type="hidden"
       name="authenticity_token"
       value="<%= form_authenticity_token %>">
-    <label>
-      <p>Content</p>
-      <textarea name="tweet[content]"></textarea>
-    </label>
+    <div class='tweet-with-counter'>
+      <textarea name="tweet[content]" placeholder="Content"></textarea>
+      <strong class="chars-left">
+      </strong>
+    </div>
     <br>
     <label>
       <p>Mention</p>

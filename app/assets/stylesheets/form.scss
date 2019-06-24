@@ -15,6 +15,7 @@ h2 {
   background-color: #e7e7e7;
   border-radius: 10px;
   box-shadow: 2px 4px rgba(0, 0, 0, 0.3);
+  width: 20%;
 }
 
 .feed-form textarea,
@@ -28,11 +29,15 @@ h2 {
 }
 
 .feed-form textarea {
-  min-height: 100px;
+  min-height: 130px;
+  padding: 10px;
+  resize: none;
 }
 
 .login-form,
-.signup-form {
+.signup-form,
+.tweet-compose,
+.tweet-with-counter {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,4 +69,15 @@ h2 {
   font: 700 1.6rem 'Roboto';
   padding: 20px;
   text-align: center;
+}
+
+.tweet-with-counter {
+  position: relative;
+}
+
+.tweet-with-counter strong {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  color: #888;
 }

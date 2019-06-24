@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" 
   rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
-    <script></script>
+    <script>
+      window.users = <%= render('users/users.json.jbuilder', users: User.all).html_safe %>
+    </script>
   </head>
   <header>
     <nav class='main-nav'>

@@ -8,13 +8,29 @@ class TweetCompose {
 
   submit(e) {
     e.preventDefault();
-    const $textContent = this.$el.find('textarea').val();
-    // gets user_id from selected in dropdown
-    const $dropdownContent = this.$el.find('select').val();
-    APIUtil.createTweet(data).then(() => {
-      // do stuff
+    const tweetData = this.$el.serializeJSON();
+    const targetUl = this.$el.attr('data-tweets-ul');
+    this.$el.find(':input').prop('disabled', true);
+    APIUtil.createTweet(tweetData)
+      .then(data => {
+        const dataToString = JSON.stringify(data);
+        const $ul = $(`ul${targetUl}`);
+        const $li = $('<li></li>');
+        $ul.prepend($li.append(dataToString));
+      })
+      .fail(err => {
+        this.$el.find(':input').prop('disabled', false);
+      });
+  }
+
+  clearInput() {
+    const allInputs = this.$el.find(':input');
+    allInputs.each((i, ele) => {
+      $(ele).val('');
     });
   }
+
+  handleSuccess() {}
 }
 
 module.exports = TweetCompose;

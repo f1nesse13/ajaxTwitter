@@ -2,11 +2,11 @@
 <section class="feed">
   <article class="feed-messages">
     <b>Your Feed!</b>
-    <ul id="feed-messages-list">
-      <% @feed_tweets.each do |tweet| %>
-        <li><%= render 'tweets/tweet', tweet: tweet %></li>
-      <% end %>
-    </ul>
+    <div class="infinite-tweets">
+      <ul id="feed-messages-list">
+        <a href="#">Load more</a>
+      </ul>
+    </div>
   </article>
   <aside class="feed-form">
     <%= render 'tweets/form' %>

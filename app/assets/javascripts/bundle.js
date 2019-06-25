@@ -121,6 +121,13 @@ const APIUtil = {
       type: 'POST',
       dataType: 'json',
       data
+    }),
+  getTweets: data =>
+    $.ajax({
+      url: '/feed',
+      type: 'GET',
+      dataType: 'json',
+      data
     })
 };
 
@@ -192,6 +199,94 @@ module.exports = FollowToggle;
 
 /***/ }),
 
+/***/ "./frontend/infinite_tweets.js":
+/*!*************************************!*\
+  !*** ./frontend/infinite_tweets.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable class-methods-use-this */
+const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js");
+
+class InfiniteTweets {
+  constructor($el) {
+    this.$el = $($el);
+    this.lastCreatedAt = null;
+    $(this.$el).on('click', '.fetch-tweets', this.fetchTweets.bind(this));
+    $(this.$el).on('insert-tweet', this.insertTweet.bind(this));
+  }
+
+  fetchTweets(e) {
+    e.preventDefault();
+    const that = this;
+    const data = {};
+    if (this.lastCreatedAt) {
+      data.max_created_at = this.lastCreatedAt;
+    }
+    APIUtil.getTweets(data).then(res => {
+      that.insertTweets(res);
+
+      if (res.length < 20) {
+        that.$el.find('.fetch-tweets').replaceWith("<b class='replace-link'> No more tweets </b>");
+      }
+      if (res.length > 0) {
+        that.lastCreatedAt = res[res.length - 1].created_at;
+      }
+    });
+  }
+
+  insertTweets(data) {
+    // console.log(data);
+    const $ul = this.$el.find('ul#feed-messages-list');
+    $($ul).append(data.map(this.createTweet));
+    $('.hide')
+      .removeClass('hide')
+      .addClass('fetch-tweets');
+  }
+
+  insertTweet(event, data) {
+    const $ul = this.$el.find('ul#feed-messages-list');
+    $($ul).prepend(this.createTweet(data));
+
+    if (!this.lastCreatedAt) this.lastCreatedAt = data.created_at;
+  }
+
+  createTweet(tweet) {
+    // Grab all mentions
+    const mentions = tweet.mentions
+      .map(
+        mention =>
+          `<li>
+        <a href='/users/${mention.user.id}'>@${mention.user.username}</a>
+        </li>`
+      )
+      .join('');
+    // creates two possible strings for output - removing the Mentions: paragraph element if no mentions are present
+    const tweetWithMention = `<div class='tweet'>
+      <a href='/users/${tweet.user.id}'>${tweet.user.username}</a>
+      <p>${tweet.content}</p>
+      <small>${tweet.created_at}</small>
+      <ul>
+      <p>Mentions:</p>
+      ${mentions}</ul>`;
+    const tweetWithoutMention = `<div class='tweet'>
+      <a href='/users/${tweet.user.id}'>${tweet.user.username}</a>
+      <p>${tweet.content}</p>
+      <small>${tweet.created_at}</small>
+      <ul>
+      ${mentions}</ul>`;
+
+    const tweetDiv = mentions.length > 0 ? tweetWithMention : tweetWithoutMention;
+    return $(tweetDiv);
+  }
+}
+
+module.exports = InfiniteTweets;
+
+
+/***/ }),
+
 /***/ "./frontend/tweet_compose.js":
 /*!***********************************!*\
   !*** ./frontend/tweet_compose.js ***!
@@ -246,9 +341,10 @@ class TweetCompose {
     // disables the disabled property clears our input fields and prepends the new li to the list of tweets
     this.$el.find(':input').prop('disabled', false);
     this.clearInput();
-    const $ul = $(this.$el.attr('data-tweets-ul'));
-    const $li = $('<li></li>');
-    $ul.prepend($li.append(JSON.stringify(data)));
+    $('#feed-messages-list').trigger('insert-tweet', data);
+    // const $ul = $(this.$el.attr('data-tweets-ul'));
+    // const $li = $('<li></li>');
+    // $ul.prepend($li.append(JSON.stringify(data)));
   }
 
   updateCounter() {
@@ -325,6 +421,7 @@ module.exports = TweetCompose;
 const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
 const UsersSearch = __webpack_require__(/*! ./users_search.js */ "./frontend/users_search.js");
 const TweetCompose = __webpack_require__(/*! ./tweet_compose.js */ "./frontend/tweet_compose.js");
+const InfiniteTweets = __webpack_require__(/*! ./infinite_tweets.js */ "./frontend/infinite_tweets.js");
 
 $(() => {
   // creates a FollowToggle instance for each .follow-toggle button
@@ -336,6 +433,9 @@ $(() => {
   });
   $('.tweet-compose').each(function(i, ele) {
     new TweetCompose(ele);
+  });
+  $('.infinite-tweets').each(function(i, ele) {
+    new InfiniteTweets(ele);
   });
 });
 

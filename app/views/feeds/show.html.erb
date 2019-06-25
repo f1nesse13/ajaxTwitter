@@ -1,13 +1,12 @@
 <h1 class="feed-title">Welcome <%= current_user.username %>!</h1>
 <section class="feed">
-  <article class="feed-messages">
+  <div class="infinite-tweets">
     <b>Your Feed!</b>
-    <div class="infinite-tweets">
-      <ul id="feed-messages-list">
-        <a href="#">Load more</a>
-      </ul>
-    </div>
-  </article>
+    <a class='fetch-tweets' href="#">Load more</a>
+    <ul id="feed-messages-list">
+    </ul>
+    <a href="#" class="hide">Load more</a>
+  </div>
   <aside class="feed-form">
     <%= render 'tweets/form' %>
   </aside>

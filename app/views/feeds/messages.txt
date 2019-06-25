@@ -1,0 +1,3 @@
+<% @feed_tweets.each do |tweet| %>
+          <li><%= render 'tweets/tweet', tweet: tweet %></li>
+        <% end %>

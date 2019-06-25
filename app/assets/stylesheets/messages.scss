@@ -31,7 +31,8 @@ b {
 
 article ul,
 aside ul,
-.users-search ul li {
+.users-search ul li,
+.infinite-tweets ul {
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -39,6 +40,7 @@ aside ul,
 
 article>ul>li,
 aside ul li,
+.infinite-tweets>ul>div,
 .users-search ul li {
   position: relative;
   display: flex;
@@ -52,12 +54,14 @@ aside ul li,
   background-color: #fff;
 }
 
-article li>ul li {
+article li>ul li,
+.tweet ul li {
   text-align: center;
   margin-bottom: 30px;
 }
 
-article li>ul>p {
+article li>ul>p,
+.tweet ul p {
   font-weight: 700;
 }
 
@@ -66,21 +70,25 @@ aside a,
 article a:visited,
 aside a:visited,
 .users-search a,
-.users-search a:visited {
+.users-search a:visited,
+.infinite-tweets a,
+.infinite-tweets a:visited {
   text-align: left;
-  font: 700 2rem 'Roboto', sans-serif;
+  font: 700 1.3rem 'Roboto', sans-serif;
   color: $base-blue;
 }
 
 article p,
-aside p {
+aside p,
+.infinite-tweets p {
   font-size: 1.5rem;
   font-family: "Roboto", sans-serif;
   text-align: center;
   color: #555;
 }
 
-article small {
+article small,
+.tweet small {
   position: absolute;
   bottom: 3px;
 }
@@ -91,6 +99,37 @@ article small {
   margin-top: 40px;
 }
 
-.feed-messages {
-  margin-right: 100px;
+#feed-messages-list {
+  width: 400px;
+}
+
+a.fetch-tweets,
+a.fetch-tweets:visited {
+  display: inline-block;
+  padding: 10px;
+  color: #000;
+  font-size: .9rem;
+  transition: color font-size .7s ease-in;
+  transition: transform .7s ease-out;
+}
+
+a.fetch-tweets:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 7px -1px 0px $base-blue;
+  transform: translate(-7px, 1px);
+  font-size: 1.1rem;
+}
+
+a.fetch-tweets:hover::after {
+  content: "..."
+}
+
+a.fetch-tweets:hover::before {
+  content: "+ "
+}
+
+.replace-link {
+  color: #000;
+  font: 300 1.1rem 'Roboto';
+  text-align: left;
 }

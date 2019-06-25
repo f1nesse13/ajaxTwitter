@@ -45,9 +45,10 @@ class TweetCompose {
     // disables the disabled property clears our input fields and prepends the new li to the list of tweets
     this.$el.find(':input').prop('disabled', false);
     this.clearInput();
-    const $ul = $(this.$el.attr('data-tweets-ul'));
-    const $li = $('<li></li>');
-    $ul.prepend($li.append(JSON.stringify(data)));
+    $('#feed-messages-list').trigger('insert-tweet', data);
+    // const $ul = $(this.$el.attr('data-tweets-ul'));
+    // const $li = $('<li></li>');
+    // $ul.prepend($li.append(JSON.stringify(data)));
   }
 
   updateCounter() {

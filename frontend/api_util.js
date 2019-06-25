@@ -26,6 +26,13 @@ const APIUtil = {
       type: 'POST',
       dataType: 'json',
       data
+    }),
+  getTweets: data =>
+    $.ajax({
+      url: '/feed',
+      type: 'GET',
+      dataType: 'json',
+      data
     })
 };
 
